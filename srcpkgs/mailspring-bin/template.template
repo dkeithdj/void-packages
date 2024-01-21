@@ -1,0 +1,35 @@
+# Template file for 'mailspring-bin'
+pkgname=mailspring-bin
+version=$VERSION
+revision=1
+archs="x86_64"
+short_desc="A beautiful, fast and fully open source mail client for Mac, Windows and Linux."
+maintainer="dkeithdj <denreikeith@gmail.com>"
+hostmakedepends="tar xz" # need gtk+3!
+license="GPL-3.0-or-later"
+homepage="https://getmailspring.com/"
+distfiles="https://github.com/Foundry376/Mailspring/releases/download/${version}/mailspring-${version}-amd64.deb"
+checksum=$CHECKSUM
+noverifyrdeps=yes
+
+do_extract() {
+  mkdir -p ${DESTDIR}
+  ar x ${XBPS_SRCDISTDIR}/${pkgname}-${version}/mailspring-${version}-amd64.deb
+  tar xf data.tar.xz -C ${DESTDIR}
+}
+
+do_install() {
+
+	vcopy usr/share/mailspring /usr/share/
+	vcopy usr/share/appdata usr/share/
+	vcopy usr/share/applications usr/share/
+	vcopy usr/share/pixmaps /usr/share/
+	vcopy usr/share/icons /usr/share/
+	vcopy usr/share/lintian /usr/share/
+
+	vdoc usr/share/doc/mailspring/copyright
+
+	vlicense usr/share/mailspring/LICENSE
+	vlicense usr/share/mailspring/LICENSES.chromium.html
+}
+

@@ -1,0 +1,33 @@
+# Template file for 'vscode-bin'
+pkgname=vscode-bin
+version=$VERSION
+revision=1
+archs="x86_64"
+depends="fontconfig libXtst gtk+3 python cairo alsa-lib nss libgcc libnotify libXScrnSaver glibc>=2.28_4 bash"
+short_desc="Binary releases of VS Code without MS branding/telemetry/licensing."
+maintainer="dkeithdj <denreikeith@gmail.com>"
+license="MIT"
+homepage="https://code.visualstudio.com"
+changelog="https://code.visualstudio.com/updates"
+distfiles="https://update.code.visualstudio.com/${version}/linux-x64/stable"
+checksum=$CHECKSUM
+
+do_install() {
+  vmkdir /opt/vscode
+
+  vcopy "$wrksrc/*" /opt/vscode
+
+  vbin "$FILESDIR/$pkgname.sh" code
+
+  vinstall "$FILESDIR/$pkgname.desktop" 644 /usr/share/applications
+  vinstall "$FILESDIR/$pkgname-uri-handler.desktop" 644 /usr/share/applications
+
+  vinstall "$wrksrc/resources/app/resources/linux/code.png" 644 /usr/share/pixmaps/ code.png
+
+  vinstall "$wrksrc/resources/completions/bash/code" 644 /usr/share/bash-completion/completions/ code
+  vinstall "$wrksrc/resources/completions/zsh/_code" 644 /usr/share/zsh/site-functions/ _code
+
+  vinstall "$FILESDIR/$pkgname-workspace.xml" 644 /usr/share/mime/packages/ $pkgname-workspace.xml
+
+  vlicense "$wrksrc/resources/app/LICENSE.rtf"
+}

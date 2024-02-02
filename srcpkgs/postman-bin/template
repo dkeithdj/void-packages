@@ -1,0 +1,28 @@
+# Template file for 'postman-bin'
+pkgname=postman-bin
+version=10.22
+revision=1
+archs="x86_64"
+makedepends="tar"
+short_desc="API Platform for building and using APIs"
+maintainer="dkeithdj <denreikeith@gmail.com>"
+license="custom:Proprietary"
+homepage="https://www.postman.com/"
+distfiles="https://dl.pstmn.io/download/latest/linux64"
+checksum=222e927013ee631cb31f6706493b83954146de74b5ad32d31aa5ea55bcf9129a
+repository=nonfree
+restricted=yes
+nopie=y
+
+do_extract() {
+	tar zxf ${XBPS_SRCDISTDIR}/${pkgname}-${version}/linux64
+}
+
+do_install() {
+	vlicense ${FILESDIR}/TermsOfService.html
+	vinstall Postman/app/resources/app/assets/icon.png 644 usr/share/pixmaps postman.png
+	vinstall ${FILESDIR}/postman.desktop 644 usr/share/applications
+	mkdir ${DESTDIR}/usr/bin
+	vcopy Postman/app usr/lib/postman
+	ln -s ../lib/postman/Postman ${DESTDIR}/usr/bin/postman
+}

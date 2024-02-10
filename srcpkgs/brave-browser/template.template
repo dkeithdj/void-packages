@@ -8,13 +8,13 @@ maintainer="dkeithdj <denreikeith@gmail.com>"
 hostmakedepends="tar xz" # need gtk+3!
 license="Mozilla Public License Version 2.0"
 homepage="https://brave.com"
-distfiles="https://github.com/brave/brave-browser/releases/download/v${version}/brave-browser_${version}_amd64.deb"
+distfiles="https://github.com/brave/brave-browser/releases/download/v${version}/brave-browser-nightly_${version}_amd64.deb"
 checksum=$CHECKSUM
 nostrip=yes
 
 do_extract() {
     mkdir -p ${DESTDIR}
-    ar x ${XBPS_SRCDISTDIR}/${pkgname}-${version}/brave-browser_${version}_amd64.deb
+    ar x ${XBPS_SRCDISTDIR}/${pkgname}-${version}/brave-browser-nightly_${version}_amd64.deb
 }
 
 do_install() {

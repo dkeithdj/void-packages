@@ -2,7 +2,7 @@
 
 echo "Checking latest version"
 
-LATEST_VERSION=$(gh api repos/brave/brave-browser/releases/latest | jq -r .tag_name | cut -c2-)
+LATEST_VERSION=$(gh api repos/brave/brave-browser/releases | jq -r '.[0].tag_name' | cut -c2-)
 
 echo "Latest version is: $LATEST_VERSION"
 
@@ -16,11 +16,12 @@ if [[ "$LATEST_VERSION" = "$CURRENT_VERSION" ]]; then
 fi
 
 export VERSION=$LATEST_VERSION
-DOWNLOAD_URL="https://github.com/brave/brave-browser/releases/download/v${VERSION}/brave-browser_${VERSION}_amd64.deb"
+DOWNLOAD_URL="https://github.com/brave/brave-browser/releases/download/v${VERSION}/brave-browser-nightly_${VERSION}_amd64.deb"
 
 echo "Downloading Brave to get checksum"
 
-gh release download -R brave/brave-browser -p "*amd64.deb" --output "brave-bin.deb"
+curl -L $DOWNLOAD_URL -o "brave-bin.deb"
+# gh release download -R brave/brave-browser -p "*amd64.deb" --output "brave-bin.deb"
 
 export CHECKSUM=$(sha256sum ./brave-bin.deb | awk '{ print $1 }')
 

@@ -21,18 +21,18 @@ do_install() {
     tar xf data.tar.xz -C ${DESTDIR}
 
     # Install the icons
-    for size in 24 32 48 64 128 256; do
+    for size in 128; do
         # Create the brave browser xdg directory
         mkdir -p ${DESTDIR}/usr/share/icons/hicolor/${size}x${size}/apps
 
         # Copy the brave browser icon
-        mv ${DESTDIR}/opt/brave.com/brave/product_logo_${size}.png         ${DESTDIR}/usr/share/icons/hicolor/${size}x${size}/apps/brave-browser.png
+        mv ${DESTDIR}/opt/brave.com/brave-nightly/product_logo_${size}_nightly.png         ${DESTDIR}/usr/share/icons/hicolor/${size}x${size}/apps/brave-browser.png
     done
 
     # Remove unused icons
-    rm ${DESTDIR}/opt/brave.com/brave/*.xpm
+    # rm ${DESTDIR}/opt/brave.com/brave-nightly/*.xpm
 
     # Remove the Debian/Ubuntu crontab
     rm -rf ${DESTDIR}/etc
-    rm -rf ${DESTDIR}/opt/brave.com/brave/cron
+    rm -rf ${DESTDIR}/opt/brave.com/brave-nightly/cron
 }
